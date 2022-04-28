@@ -1,1 +1,1 @@
-# S-nemaBiletOtomasyonu
+# SinemaBiletOtomasyonu
