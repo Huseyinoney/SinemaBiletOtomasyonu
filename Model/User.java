@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import Controller.DBConnection;
 
-public class user {
+public class User {
 
 	DBConnection conn = new DBConnection();
 	Connection con = conn.DBCon();
