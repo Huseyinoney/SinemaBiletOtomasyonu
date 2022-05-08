@@ -1,13 +1,13 @@
 package Model;
 
-public class Müsteri extends user {
+public class MÃ¼steri extends User {
 
-	public Müsteri(int id, String userName, String password) {
+	public MÃ¼steri(int id, String userName, String password) {
 		super(id, userName, password);
 		
 	}
 
-	//filmgöster eklenecek
+	//filmgÃ¶ster eklenecek
 	
 	
 }
