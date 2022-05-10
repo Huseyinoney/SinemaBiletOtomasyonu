@@ -62,7 +62,7 @@ CREATE TABLE `misafir` (
 -- Tablo için tablo yapısı `müsteri`
 --
 
-CREATE TABLE `müsteri` (
+CREATE TABLE `m�steri` (
   `CustomerId` int(11) NOT NULL,
   `UserName` varchar(25) NOT NULL,
   `Password` varchar(25) NOT NULL

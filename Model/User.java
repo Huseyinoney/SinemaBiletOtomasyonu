@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import Controller.DBConnection;
 
@@ -21,7 +22,7 @@ public class User {
 	private String userName;
 	private String password;
 	
-	public user(int id, String userName, String password) {
+	public User(int id, String userName, String password) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -32,24 +33,30 @@ public class User {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getUserName() {
 		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public ArrayList<Film> getFilmList() throws SQLException{
+		ArrayList<Film> list = new ArrayList<>();
+		Film obj;
+
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM film");
+			while (rs.next()) {
+				obj = new Film(rs.getInt("FilmId"),rs.getString("filmName"),rs.getString("type"),rs.getString("image"));
+				list.add(obj);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return list;
+		
 	}
 	
 	public boolean changeUserpassword(String kAdi, String Sifre) throws SQLException{

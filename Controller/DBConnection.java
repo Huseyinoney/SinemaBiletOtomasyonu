@@ -1,15 +1,14 @@
 package Controller;
 
 import java.sql.Connection;
-import java.sql.Driver;
+//import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 
 public class DBConnection {
 
 	Connection c = null;
 	
-	public DBConnection() {}
 
 	public Connection DBCon() {
         
