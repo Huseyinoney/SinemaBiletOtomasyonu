@@ -49,7 +49,7 @@ public class Admin extends User{
 	//SÄ°NEMA Ä°Å�LEMLERÄ°
 
 	
-	public boolean addSinema(String sinemaAdi,String Tarih,String Saat, String Salon) throws SQLException{
+	public boolean addFilm(String sinemaAdi,String Tarih,String Saat, String Salon) throws SQLException{
 		String query = "INSERT INTO sinema" + "(sinemaAdi,Tarih,Saat,Salon) VALUES" + "(?,?,?,?)";
 		boolean key = false;
 		try {
@@ -71,7 +71,7 @@ public class Admin extends User{
 		}
 	}
 	
-	public boolean deleteSinema(int ID) throws SQLException{
+	public boolean deleteFilm(int ID) throws SQLException{
 		String query = "DELETE FROM sinema WHERE id = ?";
 		boolean key = false;
 		try {
