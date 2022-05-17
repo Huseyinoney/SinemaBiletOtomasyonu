@@ -18,19 +18,19 @@ public class User {
 	PreparedStatement preparedStatement = null;
 	
 	
-	private int id;
+	private int userID;
 	private String userName;
 	private String password;
 	
-	public User(int id, String userName, String password) {
+	public User(int userID, String userName, String password) {
 		super();
-		this.id = id;
+		this.userID = userID;
 		this.userName = userName;
 		this.password = password;
 	}
 
-	public int getId() {
-		return id;
+	public int getuserID() {
+		return userID;
 	}
 
 	public String getUserName() {
