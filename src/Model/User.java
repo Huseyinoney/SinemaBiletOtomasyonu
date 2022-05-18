@@ -12,23 +12,22 @@ import Controller.DBConnection;
 public class User {
 
 	DBConnection conn = new DBConnection();
-	Connection con = conn.DBCon();
-	Statement st = null;
-	ResultSet rs = null;
-	PreparedStatement preparedStatement = null;
+	static Connection con = DBConnection.DBCon();
+	static Statement st = null;
+	static ResultSet rs = null;
+	static PreparedStatement preparedStatement = null;
 	
 	
 	private int id;
-	private String ad;
-	private String soyad;
-	private String username;
-	private String password;
-	private String mail;
+	protected String ad;
+	protected String soyad;
+	protected static String username;
+	protected String password;
+	protected String mail;
 	
 	public User () {} //constructor
 	
 	public User(int id, String ad, String soyad, String username, String password, String mail) {
-		super();
 		this.id = id;
 		this.ad = ad;
 		this.soyad = soyad;
@@ -84,6 +83,40 @@ public class User {
 	
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+	
+	public static boolean kayitOl(String ad, String soyad, String username, String password, String mail) throws SQLException{
+		int key = 0;
+		boolean duplicate = false;
+		String query = "INSERT INTO user" + "(ad, soyad, username, password, mail) VALUES" + "(?,?,?,?,?,?)";
+		
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM user WHERE username = '" + username +  "'");
+			while (rs.next()) {
+				duplicate = true;
+				break;
+			}
+			
+			if (!duplicate) {
+				preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, ad);
+				preparedStatement.setString(2, soyad);
+				preparedStatement.setString(3, username);
+				preparedStatement.setString(4, password);
+				preparedStatement.setString(5, mail);
+				preparedStatement.executeUpdate();
+				key = 1;
+			}
+			
+			
+		} catch (Exception e) {
+		}
+		if (key==1) {
+			return true;
+		} else {
+			return false;
+		}	
 	}
 	
 	public ArrayList<Film> getFilmList() throws SQLException{

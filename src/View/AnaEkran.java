@@ -30,7 +30,7 @@ public class AnaEkran extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private DBConnection connection = new DBConnection();
+	//private DBConnection connection = new DBConnection();
 	private JTextField txtUsername;
 	private JPasswordField passwordUser;
 	private JTextField textAdmin;
@@ -52,10 +52,11 @@ public class AnaEkran extends JFrame {
 		});
 	}
 
-	/**
+	 /**
 	 * Create the frame.
 	 */
 	public AnaEkran() {
+		setResizable(false);
 		setTitle("Sinema Bilet Otomasyonu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 400);
@@ -110,7 +111,7 @@ public class AnaEkran extends JFrame {
 				}
 				else {
 					try {
-						Connection con = connection.DBCon();
+						Connection con = DBConnection.DBCon();
 						Statement st = con.createStatement();
 						ResultSet rs = st.executeQuery("SELECT * FROM user");
 						while(rs.next()) {
@@ -145,6 +146,13 @@ public class AnaEkran extends JFrame {
 		userPanel.add(btnMisafir);
 		
 		JButton btnKayit = new JButton("Kay\u0131t Ol");
+		btnKayit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KayitEkrani giris = new KayitEkrani();
+				giris.setVisible(true);
+				dispose();
+			}
+		});
 		btnKayit.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnKayit.setBounds(30, 168, 92, 34);
 		userPanel.add(btnKayit);

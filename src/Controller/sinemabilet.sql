@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 05 May 2022, 20:09:52
--- Sunucu sürümü: 10.4.24-MariaDB
--- PHP Sürümü: 7.4.29
+-- Ãretim ZamanÄ±: 05 May 2022, 20:09:52
+-- Sunucu sÃ¼rÃ¼mÃ¼: 10.4.24-MariaDB
+-- PHP SÃ¼rÃ¼mÃ¼: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,38 +18,38 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Veritabanı: `sinemabilet`
+-- VeritabanÄ±: `sinemabilet`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `admin`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `admin`
 --
 
 CREATE TABLE `admin` (
-  `AdminId` int(11) NOT NULL,
-  `UserName` varchar(25) NOT NULL,
-  `Password` varchar(25) NOT NULL
+  `id` int(11) NOT NULL,
+  `username` varchar(25) NOT NULL,
+  `password` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `film`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `film`
 --
 
 CREATE TABLE `film` (
   `FilmId` int(11) NOT NULL,
   `FilmAdi` varchar(75) NOT NULL,
   `FilmTur` varchar(25) NOT NULL,
-  `Görsel` blob NOT NULL
+  `GÃ¶rsel` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `misafir`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `misafir`
 --
 
 CREATE TABLE `misafir` (
@@ -59,19 +59,22 @@ CREATE TABLE `misafir` (
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `müsteri`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `mÃ¼steri`
 --
 
-CREATE TABLE `m�steri` (
-  `CustomerId` int(11) NOT NULL,
-  `UserName` varchar(25) NOT NULL,
-  `Password` varchar(25) NOT NULL
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `ad` varchar(25) NOT NULL,
+  `soyad` varchar(25) NOT NULL,
+  `username` varchar(25) NOT NULL,
+  `password` varchar(25) NOT NULL,
+  `mail` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `odeme`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `odeme`
 --
 
 CREATE TABLE `odeme` (
@@ -84,7 +87,7 @@ CREATE TABLE `odeme` (
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `rezervasyon`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `rezervasyon`
 --
 
 CREATE TABLE `rezervasyon` (
@@ -99,12 +102,12 @@ CREATE TABLE `rezervasyon` (
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `salon`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `salon`
 --
 
 CREATE TABLE `salon` (
   `SalonId` int(11) NOT NULL,
-  `SalonAdı` varchar(10) NOT NULL,
+  `SalonAdÄ±` varchar(10) NOT NULL,
   `KoltukId` int(11) NOT NULL,
   `KoltukNumara` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -112,7 +115,7 @@ CREATE TABLE `salon` (
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `seans`
+-- Tablo iÃ§in tablo yapÄ±sÄ± `seans`
 --
 
 CREATE TABLE `seans` (
@@ -122,44 +125,44 @@ CREATE TABLE `seans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dökümü yapılmış tablolar için indeksler
+-- DÃ¶kÃ¼mÃ¼ yapÄ±lmÄ±Å tablolar iÃ§in indeksler
 --
 
 --
--- Tablo için indeksler `admin`
+-- Tablo iÃ§in indeksler `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`AdminId`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Tablo için indeksler `film`
+-- Tablo iÃ§in indeksler `film`
 --
 ALTER TABLE `film`
   ADD PRIMARY KEY (`FilmId`),
   ADD KEY `FilmAdi` (`FilmAdi`);
 
 --
--- Tablo için indeksler `misafir`
+-- Tablo iÃ§in indeksler `misafir`
 --
 ALTER TABLE `misafir`
   ADD PRIMARY KEY (`GuestId`);
 
 --
--- Tablo için indeksler `müsteri`
+-- Tablo iÃ§in indeksler `mÃ¼steri`
 --
-ALTER TABLE `müsteri`
-  ADD PRIMARY KEY (`CustomerId`),
-  ADD KEY `UserName` (`UserName`);
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `username` (`username`);
 
 --
--- Tablo için indeksler `odeme`
+-- Tablo iÃ§in indeksler `odeme`
 --
 ALTER TABLE `odeme`
   ADD PRIMARY KEY (`OdemeId`),
   ADD KEY `RezervasyonId` (`RezervasyonId`);
 
 --
--- Tablo için indeksler `rezervasyon`
+-- Tablo iÃ§in indeksler `rezervasyon`
 --
 ALTER TABLE `rezervasyon`
   ADD PRIMARY KEY (`RezervasyonId`),
@@ -169,88 +172,88 @@ ALTER TABLE `rezervasyon`
   ADD KEY `KoltukNumara` (`KoltukNumara`);
 
 --
--- Tablo için indeksler `salon`
+-- Tablo iÃ§in indeksler `salon`
 --
 ALTER TABLE `salon`
   ADD PRIMARY KEY (`SalonId`),
-  ADD KEY `SalonAdı` (`SalonAdı`,`KoltukNumara`),
+  ADD KEY `SalonAdÄ±` (`SalonAdÄ±`,`KoltukNumara`),
   ADD KEY `KoltukNumara` (`KoltukNumara`);
 
 --
--- Tablo için indeksler `seans`
+-- Tablo iÃ§in indeksler `seans`
 --
 ALTER TABLE `seans`
   ADD PRIMARY KEY (`SeansId`);
 
 --
--- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
+-- DÃ¶kÃ¼mÃ¼ yapÄ±lmÄ±Å tablolar iÃ§in AUTO_INCREMENT deÄeri
 --
 
 --
--- Tablo için AUTO_INCREMENT değeri `admin`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `AdminId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `film`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `film`
 --
 ALTER TABLE `film`
   MODIFY `FilmId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `misafir`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `misafir`
 --
 ALTER TABLE `misafir`
   MODIFY `GuestId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `müsteri`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `mÃ¼steri`
 --
-ALTER TABLE `müsteri`
-  MODIFY `CustomerId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `odeme`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `odeme`
 --
 ALTER TABLE `odeme`
   MODIFY `OdemeId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `rezervasyon`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `rezervasyon`
 --
 ALTER TABLE `rezervasyon`
   MODIFY `RezervasyonId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `salon`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `salon`
 --
 ALTER TABLE `salon`
   MODIFY `SalonId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `seans`
+-- Tablo iÃ§in AUTO_INCREMENT deÄeri `seans`
 --
 ALTER TABLE `seans`
   MODIFY `SeansId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Dökümü yapılmış tablolar için kısıtlamalar
+-- DÃ¶kÃ¼mÃ¼ yapÄ±lmÄ±Å tablolar iÃ§in kÄ±sÄ±tlamalar
 --
 
 --
--- Tablo kısıtlamaları `odeme`
+-- Tablo kÄ±sÄ±tlamalarÄ± `odeme`
 --
 ALTER TABLE `odeme`
   ADD CONSTRAINT `odeme_ibfk_1` FOREIGN KEY (`RezervasyonId`) REFERENCES `rezervasyon` (`RezervasyonId`);
 
 --
--- Tablo kısıtlamaları `rezervasyon`
+-- Tablo kÄ±sÄ±tlamalarÄ± `rezervasyon`
 --
 ALTER TABLE `rezervasyon`
   ADD CONSTRAINT `rezervasyon_ibfk_1` FOREIGN KEY (`FilmAdi`) REFERENCES `film` (`FilmAdi`),
-  ADD CONSTRAINT `rezervasyon_ibfk_2` FOREIGN KEY (`UserName`) REFERENCES `müsteri` (`UserName`),
-  ADD CONSTRAINT `rezervasyon_ibfk_3` FOREIGN KEY (`SalonAdi`) REFERENCES `salon` (`SalonAdı`),
+  ADD CONSTRAINT `rezervasyon_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
+  ADD CONSTRAINT `rezervasyon_ibfk_3` FOREIGN KEY (`SalonAdi`) REFERENCES `salon` (`SalonAdÄ±`),
   ADD CONSTRAINT `rezervasyon_ibfk_4` FOREIGN KEY (`KoltukNumara`) REFERENCES `salon` (`KoltukNumara`);
 COMMIT;
 

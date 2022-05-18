@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Controller.DBConnection;
 
-public class Admin extends User {
+public class Admin {
 
 	DBConnection conn = new DBConnection();
 	Connection con = conn.DBCon();
@@ -20,12 +20,11 @@ public class Admin extends User {
 	public Admin() {}
 	
 	public Admin(int id, String adminname, String password) {
-		super();
+		
 		this.id = id;
 		this.adminname = adminname;
 		this.password = password;
-		
-		
+	
 	}
 	
 
@@ -127,7 +126,7 @@ public class Admin extends User {
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM user");
 			while (rs.next()) {
-				obj = new User(rs.getInt("id"),rs.getString("username"),rs.getString("password"));
+				obj = new User(rs.getInt("id"), rs.getString("ad"), rs.getString("soyad"), rs.getString("username"), rs.getString("password"), rs.getString("Mail"));
 				list.add(obj);
 			} 	
 		}

@@ -46,6 +46,8 @@ public class UserEkrani extends JFrame {
 	 * Create the frame.
 	 */
 	public UserEkrani(User user) {
+		setResizable(false);
+		setTitle(" ");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
@@ -75,10 +77,10 @@ public class UserEkrani extends JFrame {
 		btnCikis.setBounds(50, 250, 190, 70);
 		contentPane.add(btnCikis);
 		
-		JButton btnNewButton = new JButton("Bilgilerimi G\u00FCncelle");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton.setBounds(50, 150, 190, 70);
-		contentPane.add(btnNewButton);
+		JButton btnUserUpdate = new JButton("Bilgilerimi G\u00FCncelle");
+		btnUserUpdate.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnUserUpdate.setBounds(50, 150, 190, 70);
+		contentPane.add(btnUserUpdate);
 	}
 
 }
