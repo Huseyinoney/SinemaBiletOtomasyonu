@@ -13,7 +13,7 @@ public class DBConnection {
 		Connection c = null;
         
        try {
-    	   Class.forName("com.mysql.jdbc.Driver");
+    	   //Class.forName("com.mysql.jdbc.Driver");
     	   c = DriverManager.getConnection("jdbc:mysql://localhost:3306/otomasyon", "root", "12345678");
     	   return c;
        } 

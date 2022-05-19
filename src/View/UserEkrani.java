@@ -5,11 +5,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.DBConnection;
+import Model.Film;
 import Model.User;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.JButton;
@@ -24,6 +33,7 @@ public class UserEkrani extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	static User user = new User();
+	static Film film = new Film();
 	private JPanel contentPane;
 
 	/**
@@ -61,6 +71,19 @@ public class UserEkrani extends JFrame {
 		contentPane.add(lblBaslik);
 		
 		JButton btnFilm = new JButton("Filmlere G\u00F6z At");
+		btnFilm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FilmEkrani filmekran;
+					filmekran = new FilmEkrani(film);
+					filmekran.setVisible(true);
+					dispose();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnFilm.setForeground(new Color(0, 153, 51));
 		btnFilm.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnFilm.setBounds(260, 250, 190, 70);
@@ -72,12 +95,39 @@ public class UserEkrani extends JFrame {
 		contentPane.add(btnBilet);
 		
 		JButton btnCikis = new JButton("\u00C7\u0131k\u0131\u015F Yap");
+		btnCikis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnaEkran anaekran = new AnaEkran();
+				anaekran.setVisible(true);
+				dispose();
+			}
+		});
 		btnCikis.setForeground(Color.RED);
 		btnCikis.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnCikis.setBounds(50, 250, 190, 70);
 		contentPane.add(btnCikis);
 		
 		JButton btnUserUpdate = new JButton("Bilgilerimi G\u00FCncelle");
+		btnUserUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Connection con = DBConnection.DBCon();
+					Statement st = con.createStatement();
+					ResultSet rs = st.executeQuery("SELECT * FROM user WHERE username = '" + user.getUserName() + "' ");
+					rs.next();
+					user.setAd(rs.getString("ad"));
+					user.setSoyad(rs.getString("soyad"));
+					user.setUserName(rs.getString("username"));
+					user.setPassword(rs.getString("password"));
+					user.setMail(rs.getString("mail"));
+				}
+				catch (Exception e2) {
+				}
+				UserUpdate guncelle = new UserUpdate(user);
+				guncelle.setVisible(true);
+				dispose();
+			}
+		});
 		btnUserUpdate.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnUserUpdate.setBounds(50, 150, 190, 70);
 		contentPane.add(btnUserUpdate);

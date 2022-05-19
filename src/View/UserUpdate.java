@@ -6,7 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Model.User;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -14,6 +19,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class UserUpdate extends JFrame {
@@ -30,6 +36,7 @@ public class UserUpdate extends JFrame {
 	private JPasswordField passwordUser;
 	private JButton btnKaydet;
 	private JButton btnIptal;
+	static User user = new User();
 
 	/**
 	 * Launch the application.
@@ -38,7 +45,7 @@ public class UserUpdate extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserUpdate frame = new UserUpdate();
+					UserUpdate frame = new UserUpdate(user);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +57,7 @@ public class UserUpdate extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserUpdate() {
+	public UserUpdate(User user) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 400);
@@ -66,21 +73,26 @@ public class UserUpdate extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		adField = new JTextField();
+		adField.setText(user.getAd());
 		adField.setBounds(112, 98, 364, 30);
 		contentPane.add(adField);
 		adField.setColumns(10);
 		
 		soyadField = new JTextField();
+		soyadField.setText(user.getSoyad());
 		soyadField.setColumns(10);
 		soyadField.setBounds(112, 138, 364, 30);
 		contentPane.add(soyadField);
 		
 		usernameField = new JTextField();
+		usernameField.setText(user.getUserName());
+		usernameField.setEditable(false);
 		usernameField.setColumns(10);
 		usernameField.setBounds(112, 180, 364, 30);
 		contentPane.add(usernameField);
 		
 		mailField = new JTextField();
+		mailField.setText(user.getMail());
 		mailField.setColumns(10);
 		mailField.setBounds(112, 260, 364, 30);
 		contentPane.add(mailField);
@@ -111,10 +123,30 @@ public class UserUpdate extends JFrame {
 		contentPane.add(lblMail);
 		
 		passwordUser = new JPasswordField();
+		passwordUser.setText(user.getPassword());
 		passwordUser.setBounds(112, 220, 364, 30);
 		contentPane.add(passwordUser);
 		
 		btnKaydet = new JButton("Kaydet");
+		btnKaydet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					boolean control = user.updateUser(adField.getText(), soyadField.getText(), usernameField.getText(), passwordUser.getText(), mailField.getText());
+					if (control) {
+						JOptionPane.showMessageDialog(contentPane, "Kayit Basarili.");
+						UserEkrani userekran = new UserEkrani(user);
+						userekran.setVisible(true);
+						dispose();
+					}
+					else {
+						JOptionPane.showMessageDialog(contentPane, "Hata", "Hata", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(contentPane, "sql hatasi: " + e1, "Hata", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnKaydet.setForeground(new Color(0, 153, 0));
 		btnKaydet.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnKaydet.setBounds(317, 316, 159, 37);
@@ -123,6 +155,9 @@ public class UserUpdate extends JFrame {
 		btnIptal = new JButton("\u0130ptal");
 		btnIptal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				UserEkrani userekran = new UserEkrani(user);
+				userekran.setVisible(true);
+				dispose();
 			}
 		});
 		btnIptal.setForeground(Color.RED);

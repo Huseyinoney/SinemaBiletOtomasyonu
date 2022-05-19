@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Model.User;
-import Controller.Controller;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -133,7 +132,7 @@ public class KayitEkrani extends JFrame {
 				}
 				else {
 					try {
-						boolean control = Controller.kayitOl(adField.getText(), soyadField.getText(), usernameField.getText(), passwordField.getText(), mailField.getText());
+						boolean control = user.kayitOl(adField.getText(), soyadField.getText(), usernameField.getText(), passwordField.getText(), mailField.getText());
 						if (control) {
 							JOptionPane.showMessageDialog(contentPane, "Kayit Basarili.");
 							AnaEkran login = new AnaEkran();
@@ -147,37 +146,6 @@ public class KayitEkrani extends JFrame {
 						e1.printStackTrace();
 					}
 				}
-				
-				/*String ad = adField.getText();
-				String soyad = soyadField.getText();
-				String username = usernameField.getText();
-				String password = String.valueOf(passwordField.getPassword());
-				String mail = mailField.getText();
-				try {
-					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/otomasyon", "root", "12345678");
-					
-					PreparedStatement preparedStatement = null;
-					String query = ("INSERT INTO user" + "(ad, soyad, username, password, mail) VALUES" + "(?,?,?,?,?)");
-					Statement st = connection.createStatement();
-					preparedStatement = connection.prepareStatement(query);
-					preparedStatement.setString(1, ad);
-					preparedStatement.setString(2, soyad);
-					preparedStatement.setString(3, username);
-					preparedStatement.setString(4, password);
-					preparedStatement.setString(5, mail);
-					preparedStatement.executeUpdate();
-					int x = st.executeUpdate(query);
-					if (x == 0) {
-						JOptionPane.showMessageDialog(btnKaytOl, "Kayit zaten mevcut");
-					} 
-					else {
-						JOptionPane.showMessageDialog(btnKaytOl, "Kaydiniz basariyla olusturuldu");
-					}
-					connection.close();
-				} catch (Exception e2) {
-					//String msg = e2.toString();
-					//JOptionPane.showMessageDialog(contentPane, msg , "Hata", JOptionPane.ERROR_MESSAGE);
-				}*/
 			}
 		});
 		btnKaytOl.setForeground(new Color(0, 153, 0));
@@ -186,6 +154,13 @@ public class KayitEkrani extends JFrame {
 		contentPane.add(btnKaytOl);	
 		
 		JButton btnIptal = new JButton("\u0130ptal");
+		btnIptal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnaEkran anaekran = new AnaEkran();
+				anaekran.setVisible(true);
+				dispose();
+			}
+		});
 		btnIptal.setForeground(Color.RED);
 		btnIptal.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnIptal.setBounds(112, 316, 159, 37);

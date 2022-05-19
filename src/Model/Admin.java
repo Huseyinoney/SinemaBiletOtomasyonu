@@ -27,10 +27,30 @@ public class Admin {
 	
 	}
 	
+	public int getId() {
+		return id;
+	}
 
-	
-	//Admin İşlemleri
-	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getAdminname() {
+		return adminname;
+	}
+
+	public void setAdminname(String adminname) {
+		this.adminname = adminname;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public boolean updateAdmin(int ID, String kAdi, String Sifre) throws SQLException{
 		String query = "UPDATE admin SET kAdi=?, Sifre=? WHERE id = ?";
 		boolean key = false;
@@ -51,6 +71,8 @@ public class Admin {
 			return false;
 		}	
 	}
+	
+	
 	
 	
 	//SÄ°NEMA Ä°Å�LEMLERÄ°
@@ -120,20 +142,20 @@ public class Admin {
 		}	
 	}
 	public ArrayList<User> getUserList() throws SQLException{
-		ArrayList<User> list = new ArrayList<>();
+		ArrayList<User> userlist = new ArrayList<>();
 		User obj;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM user");
 			while (rs.next()) {
-				obj = new User(rs.getInt("id"), rs.getString("ad"), rs.getString("soyad"), rs.getString("username"), rs.getString("password"), rs.getString("Mail"));
-				list.add(obj);
+				obj = new User(rs.getInt("id"), rs.getString("ad"), rs.getString("soyad"), rs.getString("username"), rs.getString("password"), rs.getString("mail"));
+				userlist.add(obj);
 			} 	
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		return list;
+		return userlist;
 	}
 	
 	public boolean addUser(String UserName, String Password) throws SQLException{
@@ -171,13 +193,13 @@ public class Admin {
 	}
 	
 	
-	public boolean deleteUser(int ID) throws SQLException{
-		String query = "DELETE FROM user WHERE id = ?";
+	public boolean deleteUser(String username) throws SQLException{
+		String query = "DELETE FROM user WHERE username = ?";
 		boolean key = false;
 		try {
 			st = con.createStatement();
 			preparedStatement = con.prepareStatement(query);
-			preparedStatement.setInt(1, ID);
+			preparedStatement.setString(1, username);
 			preparedStatement.executeUpdate();
 			key = true;
 		} catch (Exception e) {
@@ -212,9 +234,4 @@ public class Admin {
 			return false;
 		}	
 	}
-	
-	
-	
-	
-
 }

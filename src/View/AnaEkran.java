@@ -11,12 +11,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import Controller.DBConnection;
+import Model.Admin;
 import Model.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JLabel;
@@ -30,11 +32,13 @@ public class AnaEkran extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	//private DBConnection connection = new DBConnection();
+	private DBConnection connection = new DBConnection();
 	private JTextField txtUsername;
 	private JPasswordField passwordUser;
 	private JTextField textAdmin;
 	private JPasswordField passwordAdmin;
+	static User user = new User();
+	static Admin admin = new Admin();
 
 	/**
 	 * Launch the application.
@@ -106,32 +110,32 @@ public class AnaEkran extends JFrame {
 		JButton btnGiris = new JButton("Giri\u015F");
 		btnGiris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(txtUsername.getText().length()==0||passwordUser.getPassword().length==0) {
-					JOptionPane.showMessageDialog(userPanel, "Lutfen tum alanlari doldurun", "Hata", JOptionPane.ERROR_MESSAGE);
+				if (txtUsername.getText().length()==0||passwordUser.getPassword().length==0) {
+					JOptionPane.showMessageDialog(contentPane, "Tum alanlari doldurun", "Hata", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					try {
+						
 						Connection con = DBConnection.DBCon();
 						Statement st = con.createStatement();
-						ResultSet rs = st.executeQuery("SELECT * FROM user");
-						while(rs.next()) {
-							if (txtUsername.getText().equals(rs.getString("username")) && passwordUser.getPassword().equals(rs.getString("password"))) {
+						ResultSet rs = st.executeQuery("SELECT * FROM user WHERE username = '" + txtUsername.getText() + "' ");
+						System.out.println(rs);
+						if (rs.next() && passwordUser.getText().equals(rs.getString("password"))) {
 								User user = new User();
-								user.setID(rs.getInt("id"));
+								user.setAd(rs.getString("ad"));
+								user.setSoyad(rs.getString("soyad"));
 								user.setUserName(rs.getString("username"));
 								user.setPassword(rs.getString("password"));
+								user.setMail(rs.getString("mail"));
 								UserEkrani giris = new UserEkrani(user);
 								giris.setVisible(true);
 								dispose();
-								
-							}
-							else {
-								JOptionPane.showMessageDialog(userPanel, "Girdiginiz bilgiler hatali.", "Hata", JOptionPane.ERROR_MESSAGE);
-							}
+						}
+						else {
+							JOptionPane.showMessageDialog(contentPane, "Girilen bilgiler hatali", "Hata", JOptionPane.ERROR_MESSAGE);
 						}
 					} catch (Exception e2) {
-						String msg = e2.toString();
-						JOptionPane.showMessageDialog(userPanel, msg , "Hata", JOptionPane.ERROR_MESSAGE);
+						System.out.println(e2);
 					}
 				}
  			}
@@ -186,6 +190,35 @@ public class AnaEkran extends JFrame {
 		adminPanel.add(passwordAdmin);
 		
 		JButton btnAdmin = new JButton("Giri\u015F");
+		btnAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textAdmin.getText().length()==0||passwordAdmin.getPassword().length==0) {
+					JOptionPane.showMessageDialog(contentPane, "Tum alanlari doldurun", "Hata", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					try {
+						
+						Connection con = DBConnection.DBCon();
+						Statement st = con.createStatement();
+						ResultSet rs = st.executeQuery("SELECT * FROM admin WHERE adminname = '" + textAdmin.getText() + "' ");
+						System.out.println(rs);
+						if (rs.next() && passwordAdmin.getText().equals(rs.getString("password"))) {
+								Admin admin = new Admin();
+								admin.setAdminname(rs.getString("adminname"));
+								admin.setPassword(rs.getString("password"));
+								AdminEkrani adminekran = new AdminEkrani(admin);
+								adminekran.setVisible(true);
+								dispose();
+						}
+						else {
+							JOptionPane.showMessageDialog(contentPane, "Girilen bilgiler hatali", "Hata", JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (Exception e2) {
+						System.out.println(e2);
+					}
+				}
+ 			}
+		});
 		btnAdmin.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAdmin.setBounds(144, 168, 166, 34);
 		adminPanel.add(btnAdmin);

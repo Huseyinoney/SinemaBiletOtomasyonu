@@ -12,7 +12,8 @@ import Controller.DBConnection;
 public class User {
 
 	DBConnection conn = new DBConnection();
-	static Connection con = DBConnection.DBCon();
+	Connection con = conn.DBCon();
+	//static Connection con = DBConnection.DBCon();
 	static Statement st = null;
 	static ResultSet rs = null;
 	static PreparedStatement preparedStatement = null;
@@ -21,7 +22,7 @@ public class User {
 	private int id;
 	protected String ad;
 	protected String soyad;
-	protected static String username;
+	protected String username;
 	protected String password;
 	protected String mail;
 	
@@ -85,10 +86,10 @@ public class User {
 		this.mail = mail;
 	}
 	
-	public static boolean kayitOl(String ad, String soyad, String username, String password, String mail) throws SQLException{
+	public boolean kayitOl(String ad, String soyad, String username, String password, String mail) throws SQLException{
 		int key = 0;
 		boolean duplicate = false;
-		String query = "INSERT INTO user" + "(ad, soyad, username, password, mail) VALUES" + "(?,?,?,?,?,?)";
+		String query = "INSERT INTO user" + "(ad, soyad, username, password, mail) VALUES" + "(?,?,?,?,?)";
 		
 		try {
 			st = con.createStatement();
@@ -119,6 +120,29 @@ public class User {
 		}	
 	}
 	
+	public boolean updateUser(String ad, String soyad, String username, String password, String mail) throws SQLException{
+		String query = "UPDATE user SET ad=?, soyad=?, password=?, mail=? WHERE username = ?";
+		boolean key = false;
+		try {
+			st = con.createStatement();
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setString(1, ad);
+			preparedStatement.setString(2, soyad);
+			preparedStatement.setString(3, password);
+			preparedStatement.setString(4, mail);
+			preparedStatement.setString(5, username);
+			preparedStatement.executeUpdate();
+			key = true;
+		} catch (Exception e) {
+			//System.out.println(e);
+		}
+		if (key) {
+			return true;
+		} else {
+			return false;
+		}	
+	}
+	
 	public ArrayList<Film> getFilmList() throws SQLException{
 		ArrayList<Film> list = new ArrayList<>();
 		Film obj;
@@ -127,7 +151,7 @@ public class User {
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM film");
 			while (rs.next()) {
-				obj = new Film(rs.getInt("FilmId"),rs.getString("filmName"),rs.getString("type"),rs.getString("image"));
+				obj = new Film(rs.getInt("FilmId"),rs.getString("FilmAdi"),rs.getString("FilmTur"),rs.getBlob("Gorsel"));
 				list.add(obj);
 			}
 		} catch (Exception e) {

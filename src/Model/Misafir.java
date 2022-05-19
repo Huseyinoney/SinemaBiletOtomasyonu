@@ -39,8 +39,8 @@ public class Misafir {
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM film");
 			while (rs.next()) {
-				obj = new Film(rs.getInt("FilmId"),rs.getString("filmName"),rs.getString("type"),rs.getString("image"));
-				list.add(obj);
+				//obj = new Film(rs.getInt("FilmId"),rs.getString("filmName"),rs.getString("type"),rs.getString("image"));
+				//list.add(obj);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
