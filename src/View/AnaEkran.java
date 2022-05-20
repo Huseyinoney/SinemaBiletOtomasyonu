@@ -201,7 +201,6 @@ public class AnaEkran extends JFrame {
 						Connection con = DBConnection.DBCon();
 						Statement st = con.createStatement();
 						ResultSet rs = st.executeQuery("SELECT * FROM admin WHERE adminname = '" + textAdmin.getText() + "' ");
-						System.out.println(rs);
 						if (rs.next() && passwordAdmin.getText().equals(rs.getString("password"))) {
 								Admin admin = new Admin();
 								admin.setAdminname(rs.getString("adminname"));

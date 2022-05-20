@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import Model.Film;
+import Model.User;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -48,6 +49,7 @@ public class FilmEkrani extends JFrame {
 	private JTable filmTable;
 	private JLabel myLabel = new JLabel("aaa");
 	private String[] seanslar = {"10:00", "16:00", "21:00"};
+	static User user = new User();
 
 	/**
 	 * Launch the application.
@@ -56,7 +58,7 @@ public class FilmEkrani extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FilmEkrani frame = new FilmEkrani(film);
+					FilmEkrani frame = new FilmEkrani(film, user);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,7 +71,8 @@ public class FilmEkrani extends JFrame {
 	 * Create the frame.
 	 * @throws IOException 
 	 */
-	public FilmEkrani(Film film) throws SQLException, IOException {
+	public FilmEkrani(Film film, User user) throws SQLException, IOException {
+		setTitle("Hosgeldiniz, Misafir");
 		
 		filmModel = new DefaultTableModel() {
 			
@@ -154,13 +157,35 @@ public class FilmEkrani extends JFrame {
 				// TODO Auto-generated method stub
 				String film = filmSec.getSelectedItem().toString();
 				String seans = seansSec.getSelectedItem().toString();
-				
+				KoltukEkrani koltukekran = new KoltukEkrani(film,seans,user);
+				koltukekran.setVisible(true);
+				dispose();
 			}
 		});
 		btnKoltukSec.setForeground(new Color(0, 153, 0));
 		btnKoltukSec.setFont(new Font("Tahoma", Font.BOLD, 23));
 		btnKoltukSec.setBounds(404, 381, 172, 38);
 		contentPane.add(btnKoltukSec);
+		
+		JButton btnGeri = new JButton("Geri D\u00F6n");
+		btnGeri.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				UserEkrani userekran;
+				try {
+					userekran = new UserEkrani(user);
+					userekran.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				dispose();
+			}
+		});
+		btnGeri.setBounds(491, 23, 85, 21);
+		contentPane.add(btnGeri);
 		
 	}
 }

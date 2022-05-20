@@ -155,8 +155,14 @@ public class UserUpdate extends JFrame {
 		btnIptal = new JButton("\u0130ptal");
 		btnIptal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserEkrani userekran = new UserEkrani(user);
-				userekran.setVisible(true);
+				UserEkrani userekran;
+				try {
+					userekran = new UserEkrani(user);
+					userekran.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				dispose();
 			}
 		});

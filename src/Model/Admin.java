@@ -76,18 +76,32 @@ public class Admin {
 	
 	
 	//SÄ°NEMA Ä°Å�LEMLERÄ°
-
+	public ArrayList<Film> getSinemaList() throws SQLException{
+		ArrayList<Film> list = new ArrayList<>();
+		Film obj;
+		
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM film");
+			while (rs.next()) {
+				obj = new Film(rs.getInt("FilmId"),rs.getString("FilmAdi"),rs.getString("FilmTur "),rs.getBlob("Gorsel"));
+				list.add(obj);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return list;
+		
+	}
 	
-	public boolean addSinema(String sinemaAdi,String Tarih,String Saat, String Salon) throws SQLException{
-		String query = "INSERT INTO sinema" + "(sinemaAdi,Tarih,Saat,Salon) VALUES" + "(?,?,?,?)";
+	public boolean addFilm(String FilmAdi,String FilmTur) throws SQLException{
+		String query = "INSERT INTO film (FilmAdi, FilmTur) VALUES ('" + FilmAdi +  "','" + FilmTur +  "')";
 		boolean key = false;
 		try {
 			st = con.createStatement();
 			preparedStatement = con.prepareStatement(query);
-			preparedStatement.setString(1, sinemaAdi);
-			preparedStatement.setString(2, Tarih);
-			preparedStatement.setString(3, Saat);
-			preparedStatement.setString(4, Salon);
+			preparedStatement.setString(1, FilmAdi);
+			preparedStatement.setString(2, FilmTur);
 			preparedStatement.executeUpdate();
 			key = true;
 		} catch (Exception e) {
@@ -100,13 +114,14 @@ public class Admin {
 		}
 	}
 	
-	public boolean deleteSinema(int ID) throws SQLException{
-		String query = "DELETE FROM sinema WHERE id = ?";
+	
+	public boolean deleteFilm(String FilmAdi) throws SQLException{
+		String query = "DELETE FROM film WHERE FilmAdi = ?";
 		boolean key = false;
 		try {
 			st = con.createStatement();
 			preparedStatement = con.prepareStatement(query);
-			preparedStatement.setInt(1, ID);
+			preparedStatement.setString(1, FilmAdi);
 			preparedStatement.executeUpdate();
 			key = true;
 		} catch (Exception e) {

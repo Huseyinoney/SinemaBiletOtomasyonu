@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controller.DBConnection;
+import Model.Bilet;
 import Model.Film;
 import Model.User;
 import java.awt.event.ActionListener;
@@ -35,6 +36,7 @@ public class UserEkrani extends JFrame {
 	static User user = new User();
 	static Film film = new Film();
 	private JPanel contentPane;
+	static Bilet bilet = new Bilet();
 
 	/**
 	 * Launch the application.
@@ -55,7 +57,7 @@ public class UserEkrani extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserEkrani(User user) {
+	public UserEkrani(User user) throws SQLException{
 		setResizable(false);
 		setTitle(" ");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,7 +77,7 @@ public class UserEkrani extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FilmEkrani filmekran;
-					filmekran = new FilmEkrani(film);
+					filmekran = new FilmEkrani(film,user);
 					filmekran.setVisible(true);
 					dispose();
 				} catch (SQLException | IOException e1) {
@@ -90,6 +92,20 @@ public class UserEkrani extends JFrame {
 		contentPane.add(btnFilm);
 		
 		JButton btnBilet = new JButton("Biletlerim");
+		btnBilet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BiletEkrani biletekran;
+				try {
+					biletekran = new BiletEkrani(bilet, user);
+					biletekran.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				dispose();
+			}
+		});
 		btnBilet.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnBilet.setBounds(260, 150, 190, 70);
 		contentPane.add(btnBilet);

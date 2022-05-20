@@ -161,6 +161,24 @@ public class User {
 		
 	}
 	
+	public ArrayList<Bilet> getBiletList() throws SQLException{
+		ArrayList<Bilet> list = new ArrayList<>();
+		Bilet obj;
+
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM bilet");
+			while (rs.next()) {
+				obj = new Bilet(rs.getInt("biletId"),rs.getString("FilmAdi"),rs.getString("seans"), rs.getString("koltukNumara"),rs.getString("musteri"));
+				list.add(obj);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return list;
+		
+	}
+	
 	public boolean changeUserpassword(String username, String password) throws SQLException{
 		String query = "UPDATE user SET password=? WHERE username=?";
 		boolean key = false;
