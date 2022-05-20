@@ -183,8 +183,15 @@ public class AdminEkrani extends JFrame {
 		JButton btnCikis = new JButton("\u00C7\u0131k\u0131\u015F");
 		btnCikis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnaEkran anaekran = new AnaEkran();
-				anaekran.setVisible(true);
+				AnaEkran anaekran;
+				try {
+					anaekran = new AnaEkran();
+					anaekran.setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				dispose();
 			}
 		});
@@ -414,11 +421,51 @@ public class AdminEkrani extends JFrame {
 			}
 		});
 		btnGuncelle_1.setForeground(Color.BLUE);
+		btnGuncelle_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					boolean control = admin.updateFilm(filmField.getText(), turField.getText());
+					if (control) {
+						JOptionPane.showMessageDialog(contentPane, "Guncelleme Basarili.");
+						updateUserModel();
+					}
+					else {
+						JOptionPane.showMessageDialog(contentPane, "Hata", "Hata", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(contentPane, "sql hatasi: " + e1, "Hata", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnGuncelle_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGuncelle_1.setBounds(176, 262, 140, 44);
 		filmPanel.add(btnGuncelle_1);
 		
 		JButton btnSil_1 = new JButton("Sil");
+		btnSil_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (usernameField.getText().length()==0) {
+					JOptionPane.showMessageDialog(contentPane, "Alanlari doldurun", "Hata", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					try {
+						boolean control = admin.deleteFilm(filmField.getText());
+						if (control) {
+							JOptionPane.showMessageDialog(contentPane, "Film Kaldirma Basarili.");
+							adField.setText(null);
+							soyadField.setText(null);
+							usernameField.setText(null);
+							passwordField.setText(null);
+							mailField.setText(null);
+							updateUserModel();
+						}
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+				}
+			}
+		});
 		btnSil_1.setForeground(Color.RED);
 		btnSil_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnSil_1.setBounds(326, 262, 140, 44);

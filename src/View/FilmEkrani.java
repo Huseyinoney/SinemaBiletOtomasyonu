@@ -119,6 +119,26 @@ public class FilmEkrani extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JButton btnGeri = new JButton("Geri D\u00F6n");
+		btnGeri.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				UserEkrani userekran;
+				try {
+					userekran = new UserEkrani(user);
+					userekran.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				dispose();
+			}
+		});
+		btnGeri.setBounds(491, 23, 85, 21);
+		contentPane.add(btnGeri);
+		
 		JLabel lblFilmler = new JLabel("Filmler");
 		lblFilmler.setBounds(10, 10, 566, 38);
 		lblFilmler.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,26 +186,6 @@ public class FilmEkrani extends JFrame {
 		btnKoltukSec.setFont(new Font("Tahoma", Font.BOLD, 23));
 		btnKoltukSec.setBounds(404, 381, 172, 38);
 		contentPane.add(btnKoltukSec);
-		
-		JButton btnGeri = new JButton("Geri D\u00F6n");
-		btnGeri.addActionListener(new ActionListener() {		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				UserEkrani userekran;
-				try {
-					userekran = new UserEkrani(user);
-					userekran.setVisible(true);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				dispose();
-			}
-		});
-		btnGeri.setBounds(491, 23, 85, 21);
-		contentPane.add(btnGeri);
 		
 	}
 }

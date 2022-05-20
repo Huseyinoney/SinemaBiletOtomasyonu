@@ -12,10 +12,12 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.DBConnection;
 import Model.Admin;
+import Model.Film;
 import Model.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,6 +41,7 @@ public class AnaEkran extends JFrame {
 	private JPasswordField passwordAdmin;
 	static User user = new User();
 	static Admin admin = new Admin();
+	static Film film = new Film();
 
 	/**
 	 * Launch the application.
@@ -59,7 +62,7 @@ public class AnaEkran extends JFrame {
 	 /**
 	 * Create the frame.
 	 */
-	public AnaEkran() {
+	public AnaEkran() throws IOException{
 		setResizable(false);
 		setTitle("Sinema Bilet Otomasyonu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -145,6 +148,19 @@ public class AnaEkran extends JFrame {
 		userPanel.add(btnGiris);
 		
 		JButton btnMisafir = new JButton("Misafir Giri\u015Fi");
+		btnMisafir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MisafirEkrani giris;
+				try {
+					giris = new MisafirEkrani(film);
+					giris.setVisible(true);
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				dispose();
+			}
+		});
 		btnMisafir.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnMisafir.setBounds(341, 168, 92, 34);
 		userPanel.add(btnMisafir);

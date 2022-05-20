@@ -134,21 +134,19 @@ public class Admin {
 		}	
 	}
 	
-	public boolean updateFilm(int ID, String sinemaAdi, String Tarih, String Saat, String Salon) throws SQLException{
-		String query = "UPDATE admin SET sinemaAdi=?, Tarih=?, Saat=?, Salon=? WHERE id = ?";
+	public boolean updateFilm(String FilmAdi, String FilmTur) throws SQLException{
+		String query = "UPDATE film SET FilmTur='" + FilmTur + "' WHERE FilmAdi = '" + FilmAdi + "' ";
 		boolean key = false;
 		try {
 			st = con.createStatement();
 			preparedStatement = con.prepareStatement(query);
-			preparedStatement.setString(1, sinemaAdi);
-			preparedStatement.setString(2, Tarih);
-			preparedStatement.setString(3, Saat);
-			preparedStatement.setString(4, Salon);
-			preparedStatement.setInt(5, ID);
+			preparedStatement.setString(1, FilmAdi);
+			preparedStatement.setString(2, FilmTur);
 			preparedStatement.executeUpdate();
 			key = true;
 		} catch (Exception e) {
 			e.getStackTrace();
+			System.out.println(e);
 		}
 		if (key) {
 			return true;

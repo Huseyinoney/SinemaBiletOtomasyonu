@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 //import java.sql.Connection;
 //import java.sql.DriverManager;
 //import java.sql.PreparedStatement;
@@ -142,7 +143,7 @@ public class KayitEkrani extends JFrame {
 						else {
 							JOptionPane.showMessageDialog(contentPane, "Boyle bir kullanici zaten var", "Hata", JOptionPane.ERROR_MESSAGE);
 						}
-					} catch (SQLException e1) {
+					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}
 				}
@@ -156,8 +157,14 @@ public class KayitEkrani extends JFrame {
 		JButton btnIptal = new JButton("\u0130ptal");
 		btnIptal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnaEkran anaekran = new AnaEkran();
-				anaekran.setVisible(true);
+				AnaEkran anaekran;
+				try {
+					anaekran = new AnaEkran();
+					anaekran.setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				dispose();
 			}
 		});

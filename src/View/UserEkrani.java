@@ -113,8 +113,14 @@ public class UserEkrani extends JFrame {
 		JButton btnCikis = new JButton("\u00C7\u0131k\u0131\u015F Yap");
 		btnCikis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnaEkran anaekran = new AnaEkran();
-				anaekran.setVisible(true);
+				AnaEkran anaekran;
+				try {
+					anaekran = new AnaEkran();
+					anaekran.setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				dispose();
 			}
 		});
